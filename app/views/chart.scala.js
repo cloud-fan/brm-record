@@ -5,6 +5,8 @@ $(function () {
     return '味全池剩余： ' + i + '瓶'
   }
 
+  var values = [@data.values.map(math.abs(_)).mkString(",")]
+  var maxY = Math.max.apply(Math, values) + 1
   var poolSize = @poolSize
   var positive = '#2F7ED8'
   var negative = '#AA1919'
@@ -31,6 +33,8 @@ $(function () {
       }
     },
     yAxis: {
+      min: -maxY,
+      max: maxY,
       title: {
         text: generateTitle(poolSize),
         margin: 50,
@@ -64,7 +68,7 @@ $(function () {
     series: [{
       data: [
         @for((name, value) <- data) {
-          {color: @if(value > 0) {positive} else {negative} , y: @value, name:'@name'},
+          {color: @if(value > 0) {positive} else {negative} , y: @value},
         }
       ]
     }]
@@ -73,11 +77,15 @@ $(function () {
   var chart = $('#weiquanChart').highcharts()
   $(".reduce").click(function() {
     var point = chart.series[0].data[3]
-    point.update(--point.y, false)
-    if (point.y < 0) {
+    var value = --point.y
+    values[3] = Math.abs(value)
+    maxY = Math.max.apply(Math, values) + 1
+    point.update(value, false)
+    if (value < 0) {
       point.update({color: negative}, false)
     }
-    chart.yAxis[0].setTitle({text: generateTitle(--poolSize)});
+    chart.yAxis[0].setTitle({text: generateTitle(--poolSize)})
+    chart.yAxis[0].update({min: -maxY, max: maxY})
     chart.redraw()
   })
 })
