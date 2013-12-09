@@ -84,8 +84,8 @@ $(function () {
     if (value < 0) {
       point.update({color: negative}, false)
     }
-    chart.yAxis[0].setTitle({text: generateTitle(--poolSize)})
-    chart.yAxis[0].update({min: -maxY, max: maxY})
+    chart.yAxis[0].setTitle({text: generateTitle(--poolSize)}, false)
+    chart.yAxis[0].update({min: -maxY, max: maxY}, false)
     chart.redraw()
   })
 })
