@@ -1,11 +1,11 @@
-@(poolSize: Int, data: Map[String, Int])
+@(poolSize: Int, players: List[Player])
 $(function () {
 
   function generateTitle (i) {
     return '味全池剩余： ' + i + '瓶'
   }
 
-  var values = [@data.values.map(math.abs(_)).mkString(",")]
+  var values = [@players.map(p => math.abs(p.weiquan)).mkString(",")]
   var maxY = Math.max.apply(Math, values) + 1
   var poolSize = @poolSize
   var positive = '#2F7ED8'
@@ -19,14 +19,14 @@ $(function () {
       text: '大富翁味全龙虎榜'
     },
     xAxis: {
-      categories: [@for((name,_) <- data) {'@name',}],
+      categories: [@for(p <- players) {'@p.name',}],
       title: {
         text: null
       },
       gridLineWidth: 2,
       labels: {
         useHTML: true,
-        format: '<span style="font-size:25px">{value}</span><img src="@routes.Assets.at("avatars/default.jpg")" alt="cloud" width="40px" height="40px">',
+        format: '<span style="font-size:25px">{value}</span>',
         style: {
           color: '#000000'
         }
@@ -67,8 +67,8 @@ $(function () {
     },
     series: [{
       data: [
-        @for((name, value) <- data) {
-          {color: @if(value > 0) {positive} else {negative} , y: @value},
+        @for(p <- players) {
+          {color: @if(p.weiquan > 0) {positive} else {negative} , y: @p.weiquan},
         }
       ]
     }]
@@ -76,9 +76,9 @@ $(function () {
 
   var chart = $('#weiquanChart').highcharts()
   $(".reduce").click(function() {
-    var point = chart.series[0].data[3]
+    var point = chart.series[0].data[2]
     var value = --point.y
-    values[3] = Math.abs(value)
+    values[2] = Math.abs(value)
     maxY = Math.max.apply(Math, values) + 1
     point.update(value, false)
     if (value < 0) {
