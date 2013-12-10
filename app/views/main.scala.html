@@ -1,7 +1,5 @@
-@(title: String)(content: Html)
-
+@(title: String, css: Html = Html(""))(content: Html)
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 <head>
   <title>@title</title>
@@ -11,7 +9,7 @@
   <link rel="shortcut icon" type="image/png" href='@routes.Assets.at("images/favicon.png")' >
   <link rel="stylesheet" href='@routes.Assets.at("bootstrap/css/bootstrap.min.css")' >
   <script type="text/javascript" src='@routes.Assets.at("javascripts/jquery-2.0.3.min.js")' ></script>
-
+  @css
 </head>
 <body>
 @content

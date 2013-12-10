@@ -6,6 +6,7 @@ $(function () {
   }
 
   var values = [@players.map(p => math.abs(p.weiquan)).mkString(",")]
+  var looser = '@players.minBy(_.weiquan).name'
   var maxY = Math.max.apply(Math, values) + 1
   var poolSize = @poolSize
   var positive = '#2F7ED8'
@@ -74,8 +75,22 @@ $(function () {
     }]
   })
 
+  Messenger.options = {
+    extraClasses: 'messenger-fixed messenger-on-top',
+    theme: 'future'
+  }
+
   var chart = $('#weiquanChart').highcharts()
   $(".reduce").click(function() {
+    if (poolSize == 0) {
+      Messenger().post({
+        message: '味全已经被喝完啦，快去催' + looser +'买',
+        type: 'error',
+        showCloseButton: true
+      })
+      return
+    }
+
     var point = chart.series[0].data[2]
     var value = --point.y
     values[2] = Math.abs(value)
@@ -87,5 +102,11 @@ $(function () {
     chart.yAxis[0].setTitle({text: generateTitle(--poolSize)}, false)
     chart.yAxis[0].update({min: -maxY, max: maxY}, false)
     chart.redraw()
+
+    Messenger().post({
+      message: '成功领取蛋总的味全～',
+      type: 'success',
+      showCloseButton: true
+    })
   })
 })

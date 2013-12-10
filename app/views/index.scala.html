@@ -1,6 +1,11 @@
 @(message: String)
 
-@main("大富翁战绩系统") {
+@css = {
+    <link rel="stylesheet" href='@routes.Assets.at("messenger/build/css/messenger.css")' >
+    <link rel="stylesheet" href='@routes.Assets.at("messenger/build/css/messenger-theme-future.css")' >
+}
+
+@main("大富翁战绩系统", css) {
 <div class="well">
   <div id="weiquanChart"></div>
 </div>
@@ -8,5 +13,7 @@
 <button type="button" class="reduce btn btn-success btn-lg">我也要拿蛋总的味全！</button>
 <script type="text/javascript" src='@routes.Assets.at("highcharts/highcharts.js")'></script>
 <script type="text/javascript" src='@routes.Assets.at("bootstrap/js/bootstrap.min.js")'></script>
+<script type="text/javascript" src='@routes.Assets.at("messenger/build/js/messenger.min.js")'></script>
+<script type="text/javascript" src='@routes.Assets.at("messenger/build/js/messenger-theme-future.js")'></script>
 <script type="text/javascript" src='@routes.Application.chartJS()'></script>
 }
