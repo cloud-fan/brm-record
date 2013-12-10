@@ -14,7 +14,5 @@ object Application extends Controller {
     Ok(views.js.chart(10, Player.getAllPlayers))
   }
 
-  def avatar(name: String) = Action {
-    Redirect(s"/assets/avatars/${Player.getAvatarByPlayerName(name)}")
-  }
+  def avatar(name: String) = Assets.at("/public/avatars", Player.getAvatarByPlayerName(name))
 }
