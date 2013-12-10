@@ -26,7 +26,7 @@ $(function () {
       gridLineWidth: 2,
       labels: {
         useHTML: true,
-        format: '<span style="font-size:25px">{value}</span>',
+        format: '<span style="font-size:25px">{value}</span><img src="avatars/{value}.jpg" alt="cloud" width="40px" height="40px">',
         style: {
           color: '#000000'
         }

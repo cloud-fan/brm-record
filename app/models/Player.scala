@@ -27,5 +27,14 @@ object Player {
       SQL("select * from players").as(simple *)
     }
   }
+
+  def getAvatarByPlayerName(name: String) = {
+    DB.withConnection { implicit connection =>
+      SQL("select avatar from players where name = {name}")
+      .on('name -> name)
+      .as(str("avatar").singleOpt)
+      .getOrElse("default.jpg")
+    }
+  }
 }
 

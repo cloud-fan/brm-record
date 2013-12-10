@@ -2,7 +2,6 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import scala.collection.immutable.ListMap
 import models.Player
 
 object Application extends Controller {
@@ -13,5 +12,9 @@ object Application extends Controller {
 
   def chartJS = Action {
     Ok(views.js.chart(10, Player.getAllPlayers))
+  }
+
+  def avatar(name: String) = Action {
+    Redirect(s"/assets/avatars/${Player.getAvatarByPlayerName(name)}")
   }
 }
