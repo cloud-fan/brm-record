@@ -76,15 +76,15 @@ $(function () {
   })
 
   Messenger.options = {
-    extraClasses: 'messenger-fixed messenger-on-top',
-    theme: 'future'
+    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+    theme: 'future',
   }
 
   var chart = $('#weiquanChart').highcharts()
   $(".reduce").click(function() {
     if (poolSize == 0) {
       Messenger().post({
-        message: '味全已经被喝完啦，快去催' + looser +'买',
+        message: '味全已经被喝完啦，快去催 "' + looser +'" 买',
         type: 'error',
         showCloseButton: true
       })

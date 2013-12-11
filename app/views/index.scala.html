@@ -1,4 +1,4 @@
-@(message: String)
+@(player: Option[Player])
 
 @css = {
     <link rel="stylesheet" href='@routes.Assets.at("messenger/build/css/messenger.css")' >
@@ -6,6 +6,12 @@
 }
 
 @main("大富翁战绩系统", css) {
+<div class="well">
+@if(player.isEmpty) {
+  @introduce()
+}
+</div>
+
 <div class="well">
   <div id="weiquanChart"></div>
 </div>

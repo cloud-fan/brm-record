@@ -24,7 +24,7 @@ object Player {
 
   def getAllPlayers = {
     DB.withConnection { implicit connection =>
-      SQL("select * from players").as(simple *)
+      SQL("select id,name,email,weiquan,isAdmin from players").as(simple *)
     }
   }
 
@@ -34,6 +34,28 @@ object Player {
       .on('name -> name)
       .as(str("avatar").singleOpt)
       .getOrElse("default.jpg")
+    }
+  }
+
+  def getPlayerById(id: Int) = {
+    DB.withConnection { implicit connection =>
+      SQL("select id,name,email,weiquan,isAdmin from players where id = {id}")
+      .on('id -> id)
+      .as(simple.singleOpt)
+    }
+  }
+
+  def authenticate(name: String, password: String) = {
+    DB.withConnection { implicit connection =>
+      SQL(
+        """
+          select id,name,email,weiquan,isAdmin from players
+          where name = {name} and password = {password}
+        """
+      ).on(
+          'name -> name,
+          'password -> password
+      ).as(simple.singleOpt)
     }
   }
 }
